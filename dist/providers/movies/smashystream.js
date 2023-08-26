@@ -46,6 +46,7 @@ class SmashyStream extends models_1.MovieParser {
             try {
                 const servers = await this.fetchEpisodeServers(tmdbId, season, episode);
                 const selectedServer = servers.find(s => s.name.toLowerCase() === (server === null || server === void 0 ? void 0 : server.toLowerCase()));
+                console.log("selectedServer:", selectedServer);
                 if (!selectedServer) {
                     let url = `${this.baseUrl}/playere.php?tmdb=${tmdbId}`;
                     if (season) {
@@ -65,6 +66,10 @@ class SmashyStream extends models_1.MovieParser {
                 if (selectedServer.url.includes('/fx')) {
                     return Object.assign({ headers: { Referer: this.baseUrl } }, (await new extractors_1.SmashyStream(this.proxyConfig, this.adapter).extractSmashyFX(selectedServer.url)));
                 }
+                //Player F
+                if (selectedServer.url.includes('/fizzz')) {
+                    return Object.assign({ headers: { Referer: this.baseUrl } }, (await new extractors_1.SmashyStream(this.proxyConfig, this.adapter).extractSmashyFX2(selectedServer.url)));
+                }
                 if (selectedServer.url.includes('/cf')) {
                     return Object.assign({ headers: { Referer: this.baseUrl } }, (await new extractors_1.SmashyStream(this.proxyConfig, this.adapter).extractSmashyCF(selectedServer.url)));
                 }
@@ -74,7 +79,10 @@ class SmashyStream extends models_1.MovieParser {
                 return await this.fetchEpisodeSources(selectedServer.url, season, episode, server);
             }
             catch (err) {
-                throw new Error(err.message);
+               // throw new Error(err.message);
+               // console.error(err.message);
+               console.error(err);
+              // res.error(500).send('Error: ' + err);
             }
         };
     }
