@@ -1,5 +1,4 @@
 <p align="center"><img src="https://consumet.org/images/consumetlogo.png" width="175"/></p>
-<p align="center"><img src="http://www.wikimedia-app.com/assets/img/logo.svg" width="175"/></p>
 
 <h1 align="center"> consumet.ts </h1>
 
