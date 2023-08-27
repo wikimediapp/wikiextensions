@@ -86,8 +86,5 @@
     "example": "examples",
     "test": "test"
   },
-  "publishConfig": {
-    "@<em>ghostkna</em>:registry": "https://npm.pkg.github.com"
-  },
   "author": "GhostKNA"
 }
