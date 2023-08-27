@@ -33,6 +33,11 @@ declare class SmashyStream extends VideoExtractor {
     } & {
         subtitles: ISubtitle[];
     }>;
+    extractSmashyFX3(url: string): Promise<{
+        sources: IVideo[];
+    } & {
+        subtitles: ISubtitle[];
+    }>;
     extractSmashyCF(url: string): Promise<{
         sources: IVideo[];
     } & {
