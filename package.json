@@ -87,7 +87,9 @@
     "test": "test"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "tag": "latest"
   },
   "author": "GhostKNA"
 }
