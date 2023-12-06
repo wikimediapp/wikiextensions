@@ -73,7 +73,7 @@ class RapidCloud extends models_1.VideoExtractor {
 
                 let res = null;
                 res = await this.client.get(`https://${videoUrl.hostname}/embed-2/ajax/e-1/getSources?id=${id}`, options);
-                console.log("res", res);
+                //console.log("res", res);
                 let { data: { sources, tracks, intro }, } = res;
                 //let decryptKey = await (await this.client.get('https://raw.githubusercontent.com/theonlymo/keys/e1/key')).data;
                 let decryptKey = pairs;
