@@ -30,39 +30,31 @@ class RapidCloud extends models_1.VideoExtractor {
                     },
                 };
                 let res = null;
-                // let { data: sId } = await this.client({
-                //   method: 'GET',
-                //   url: `${this.consumetApi}/utils/rapid-cloud`,
-                //   validateStatus: status => true,
-                // });
-                // if (!sId) {
-                //   sId = await this.client({
-                //     method: 'GET',
-                //     url: `${this.enimeApi}/tool/rapid-cloud/server-id`,
-                //     validateStatus: status => true,
-                //   });
-                // }
                 res = await this.client.get(`https://${videoUrl.hostname}/embed-2/ajax/e-1/getSources?id=${id}`, options);
                 let { data: { sources, tracks, intro, encrypted }, } = res;
-                let decryptKey = await (await this.client.get('https://github.com/enimax-anime/key/blob/e6/key.txt')).data;
+                let decryptKey = await (await this.client.get('https://raw.githubusercontent.com/theonlymo/keys/e1/key')).data;
                 decryptKey = (0, utils_1.substringBefore)((0, utils_1.substringAfter)(decryptKey, '"blob-code blob-code-inner js-file-line">'), '</td>');
                 if (!decryptKey) {
-                    decryptKey = await (await this.client.get('https://raw.githubusercontent.com/enimax-anime/key/e6/key.txt')).data;
+                    decryptKey = await (await this.client.get('https://raw.githubusercontent.com/theonlymo/keys/e1/key')).data;
                 }
                 if (!decryptKey)
                     decryptKey = this.fallbackKey;
                 try {
                     if (encrypted) {
-                        const sourcesArray = sources.split("");
-                        let extractedKey = "";
+                        const sourcesArray = sources.split('');
+                        let extractedKey = '';
+                        let currentIndex = 0;
                         for (const index of decryptKey) {
-                            for (let i = index[0]; i < index[1]; i++) {
-                                extractedKey += sources[i];
-                                sourcesArray[i] = "";
+                            let start = index[0] + currentIndex;
+                            let end = start + index[1];
+                            for (let i = start; i < end; i++) {
+                                extractedKey += res.data.sources[i];
+                                sourcesArray[i] = '';
                             }
+                            currentIndex += index[1];
                         }
                         decryptKey = extractedKey;
-                        sources = sourcesArray.join("");
+                        sources = sourcesArray.join('');
                         const decrypt = crypto_js_1.default.AES.decrypt(sources, decryptKey);
                         sources = JSON.parse(decrypt.toString(crypto_js_1.default.enc.Utf8));
                     }
@@ -112,11 +104,11 @@ class RapidCloud extends models_1.VideoExtractor {
                 });
                 result.subtitles = tracks
                     .map((s) => s.file
-                    ? {
-                        url: s.file,
-                        lang: s.label ? s.label : 'Thumbnails',
-                    }
-                    : null)
+                        ? {
+                            url: s.file,
+                            lang: s.label ? s.label : 'Thumbnails',
+                        }
+                        : null)
                     .filter((s) => s);
                 return result;
             }
