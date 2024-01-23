@@ -52,20 +52,6 @@ class SmashyStream extends models_1.VideoExtractor {
                             data: data,
                         });
                     }
-                    if (sourceUrl.includes('/fizzz.')) {
-                        const data = await this.extractSmashyFX2(sourceUrl);
-                        result.push({
-                            source: 'FIZZZ.',
-                            data: data,
-                        });
-                    }
-                    if (sourceUrl.includes('/fizzz1')) {
-                        const data = await this.extractSmashyFX3(sourceUrl);
-                        result.push({
-                            source: 'FIZZZ1',
-                            data: data,
-                        });
-                    }
                     if (sourceUrl.includes('/cf')) {
                         const data = await this.extractSmashyCF(sourceUrl);
                         result.push({
@@ -89,108 +75,6 @@ class SmashyStream extends models_1.VideoExtractor {
             }
         };
     }
-
-    async extractSmashyFX2(url) {
-        try {
-            const result = {
-                sources: [],
-                subtitles: [],
-            };
-            const res = await this.client.get(url, {
-                headers: {
-                    referer: url,
-                },
-            }); 
-            try {
-            console.log("---------- Obteniendo sources de Player F Serie ------------");
-            const file = res.data.match(/\[auto\].*playlist\.m3u8/)[0].replace("[auto]", "").replace(/\\\//g, "/");
-            result.sources.push({
-                url: file,
-                quality: "auto",
-                isM3U8: file.includes('.m3u8'),
-            });
-            } catch (error) {
-             // Manejar el error aquí
-             console.error("Error al obtener los sources de Player F Serie", error);  
-            }
-            try {
-            console.log("---------- Obteniendo subtitles de Player F Serie ------------");
-            const subtitle = res.data.match(/"subtitle":"\[.*?\]([^"]+)"/)[0].replace("\"subtitle\":", "").replace(/\\\//g, "/");
-            const regex = /\[([^]+?)\]([^]+?)(?=\,|$)/g;
-            const matches = [...subtitle.matchAll(regex)];
-            const resultSubtitles = matches.map(match => {
-                result.subtitles.push({
-                    url: match[2],
-                    lang: match[1],
-                })
-                const lang = match[1];
-                const url = match[2];
-                return { url, lang };
-              });  
-            } catch (error) {
-                // Manejar el error aquí
-                console.error("Error al obtener los subtitle de Player F Serie", error);
-                
-               }         
-            return result;
-        }
-        catch (err) {
-           // throw new Error(err.message);
-            console.error(err);
-        }
-    }
-
-    async extractSmashyFX3(url) {
-        try {
-            const result = {
-                sources: [],
-                subtitles: [],
-            };
-            const res = await this.client.get(url, {
-                headers: {
-                    referer: url,
-                },
-            }); 
-            try {
-            console.log("---------- Obteniendo sources de Player F Movies ------------");
-            const file = res.data.match(/\[auto\].*playlist\.m3u8/)[0].replace("[auto]", "").replace(/\\\//g, "/");
-            result.sources.push({
-                url: file,
-                quality: "auto",
-                isM3U8: file.includes('.m3u8'),
-            });
-            } catch (error) {
-             // Manejar el error aquí
-             console.error("Error al obtener los sources de Player F Movies", error);  
-            }
-            try {
-            console.log("---------- Obteniendo subtitles de Player F Movies ------------");
-            const subtitle = res.data.match(/"subtitle":"\[.*?\]([^"]+)"/)[0].replace("\"subtitle\":", "").replace(/\\\//g, "/");
-            const regex = /\[([^]+?)\]([^]+?)(?=\,|$)/g;
-            const matches = [...subtitle.matchAll(regex)];
-            const resultSubtitles = matches.map(match => {
-                result.subtitles.push({
-                    url: match[2],
-                    lang: match[1],
-                })
-                const lang = match[1];
-                const url = match[2];
-                return { url, lang };
-              });  
-            } catch (error) {
-                // Manejar el error aquí
-                console.error("Error al obtener los subtitle de Player F Movies", error);
-                
-               }        
-            return result;
-        }
-        catch (err) {
-           // throw new Error(err.message);
-            console.error(err);
-        }
-    }
-
-
     async extractSmashyFfix(url) {
         try {
             const result = {

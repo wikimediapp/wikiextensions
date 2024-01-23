@@ -56,7 +56,7 @@ class Zoro extends AnimeParser {
       res.totalPages =
         parseInt(
           $('.pagination > .page-item a[title="Last"]')?.attr('href')?.split('=').pop() ??
-            $('.pagination > .page-item.active a')?.text()?.trim()
+          $('.pagination > .page-item.active a')?.text()?.trim()
         ) || 0;
 
       if (res.totalPages === 0 && !res.hasNextPage) res.totalPages = 1;
@@ -296,6 +296,9 @@ class Zoro extends AnimeParser {
           episode: parseInt(
             $(el).find('div.tick-eps').text().replace(/\s/g, '').replace('Ep', '').split('/')[0]
           ),
+          episodelast: parseInt($(el).find('div.tick.ltr > div.tick-item.tick-sub').text()),
+          type: $(el).find('span.fdi-item:contains("TV")').text().trim(),
+          duration: $(el).find('span.fdi-item.fdi-duration').text().trim(),
         });
       });
 

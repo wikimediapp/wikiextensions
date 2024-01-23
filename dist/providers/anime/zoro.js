@@ -237,6 +237,9 @@ class Zoro extends models_1.AnimeParser {
                         title: $(el).find('div.film-poster > img').attr('alt'),
                         url: `${this.baseUrl}${$(el).find('div.film-poster > a').attr('href')}`,
                         episode: parseInt($(el).find('div.tick-eps').text().replace(/\s/g, '').replace('Ep', '').split('/')[0]),
+                        episodelast: parseInt($(el).find('div.tick.ltr > div.tick-item.tick-sub').text()),
+                        type: $(el).find('span.fdi-item:contains("TV")').text().trim(),
+                        duration: $(el).find('span.fdi-item.fdi-duration').text().trim(),
                     });
                 });
                 return {
