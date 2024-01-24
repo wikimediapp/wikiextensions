@@ -297,7 +297,7 @@ class Zoro extends AnimeParser {
             $(el).find('div.tick-eps').text().replace(/\s/g, '').replace('Ep', '').split('/')[0]
           ),
           episodelast: parseInt($(el).find('div.tick.ltr > div.tick-item.tick-sub').text()),
-          type: $(el).find('span.fdi-item:contains("TV")').text().trim(),
+          type: $(el).find('span.fdi-item:not(.fdi-duration)').text().trim(),
           duration: $(el).find('span.fdi-item.fdi-duration').text().trim(),
         });
       });
