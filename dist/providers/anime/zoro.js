@@ -8,7 +8,7 @@ class Zoro extends models_1.AnimeParser {
     constructor() {
         super(...arguments);
         this.name = 'Zoro';
-        this.baseUrl = 'https://aniwatch.to';
+        this.baseUrl = 'https://hianime.to';
         this.logo = 'https://is3-ssl.mzstatic.com/image/thumb/Purple112/v4/7e/91/00/7e9100ee-2b62-0942-4cdc-e9b93252ce1c/source/512x512bb.jpg';
         this.classPath = 'ANIME.Zoro';
         /**
@@ -39,10 +39,7 @@ class Zoro extends models_1.AnimeParser {
                 if (res.totalPages === 0 && !res.hasNextPage)
                     res.totalPages = 1;
                 $('.film_list-wrap > div.flw-item').each((i, el) => {
-                    var _a;
-                    const id = (_a = $(el)
-                        .find('div:nth-child(1) > a.film-poster-ahref')
-                        .attr('href')) === null || _a === void 0 ? void 0 : _a.split('/')[1].split('?')[0];
+                    const id = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('href').replace("?ref=search", "");
                     const title = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('title');
                     // Movie, TV, OVA, ONA, Special, Music
                     const type = $(el).find('div:nth-child(2) > div:nth-child(2) > span:nth-child(1)').text();
@@ -238,7 +235,7 @@ class Zoro extends models_1.AnimeParser {
                         url: `${this.baseUrl}${$(el).find('div.film-poster > a').attr('href')}`,
                         episode: parseInt($(el).find('div.tick-eps').text().replace(/\s/g, '').replace('Ep', '').split('/')[0]),
                         episodelast: parseInt($(el).find('div.tick.ltr > div.tick-item.tick-sub').text()),
-                        type: $(el).find('span.fdi-item:not(.fdi-duration)').text().trim(),
+                        //type: $(el).find('span.fdi-item:not(.fdi-duration)').text().trim(),
                         duration: $(el).find('span.fdi-item.fdi-duration').text().trim(),
                     });
                 });
