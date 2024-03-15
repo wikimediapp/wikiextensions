@@ -178,9 +178,9 @@ export declare enum SubOrSub {
     BOTH = "both"
 }
 export declare enum Language {
-    CASTELLANO = "castellano",
-    LATINO = "latino",
-    ORIGINAL = "original"
+    CASTELLANO = "Castellano",
+    LATINO = "Latino",
+    ORIGINAL = "Original"
 }
 export interface IMangaResult {
     id: string;

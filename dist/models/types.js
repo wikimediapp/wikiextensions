@@ -52,9 +52,9 @@ var SubOrSub;
 })(SubOrSub || (exports.SubOrSub = SubOrSub = {}));
 var Language;
 (function (Language) {
-    Language["CASTELLANO"] = "castellano";
-    Language["LATINO"] = "latino";
-    Language["ORIGINAL"] = "original";
+    Language["CASTELLANO"] = "Castellano";
+    Language["LATINO"] = "Latino";
+    Language["ORIGINAL"] = "Original";
 })(Language || (exports.Language = Language = {}));
 /**
  * Used **only** for movie/tvshow providers
