@@ -38,7 +38,7 @@ class MonoChinos extends models_1.AnimeParser {
                 $('.col-md-4').each((index, element) => {
                     const url = $(element).find('a').attr('href');
                     const id = url === null || url === void 0 ? void 0 : url.replace(this.baseUrl + "/anime/", "");
-                    const title = $(element).find('.seristitles').text().trim();
+                    const title = $(element).find('.seristitles').text().replace("Latino", "").replace("Castellano", "").trim();
                     const info = $(element).find('.seriesinfo').text().trim();
                     const type = info.split(" · ")[0];
                     let language;
@@ -82,7 +82,7 @@ class MonoChinos extends models_1.AnimeParser {
                 const { data } = await this.client.get(`${this.baseUrl}/anime/${id}`);
                 const $ = (0, cheerio_1.load)(data);
                 info.id = id;
-                info.title = $('div.chapterdetails').find('h1').text();
+                info.title = $('div.chapterdetails').find('h1').text().replace("Latino", "").replace("Castellano", "").trim();
                 //= $('div.chapterdetails').find('span.alterno').text();
                 info.synopsis = $('div.chapterdetls2 p').text().trim();
                 info.genres = getGenres($);
