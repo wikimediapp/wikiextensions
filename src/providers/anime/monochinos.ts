@@ -19,6 +19,7 @@ import {
 import { StreamSB, RapidCloud, StreamTape, Filemoon } from '../../utils';
 import { USER_AGENT } from '../../utils';
 import { resolveAny } from 'dns';
+import { Mp4Upload } from '../../extractors';
 
 class MonoChinos extends AnimeParser {
   override readonly name = 'monoschinos';
@@ -147,6 +148,13 @@ class MonoChinos extends AnimeParser {
               Referer: serverUrl.href, 'User-Agent': USER_AGENT
             },
             sources: await new Filemoon(this.proxyConfig, this.adapter).extract(serverUrl)
+          };
+        case StreamingServers.Mp4Upload:
+          return sources = {
+            headers: {
+              Referer: serverUrl.href, 'User-Agent': USER_AGENT
+            },
+            sources: await new Mp4Upload(this.proxyConfig, this.adapter).extract(serverUrl)
           };
         default:
           return sources = {}; // Puedes devolver un objeto vacío o undefined según tu lógica

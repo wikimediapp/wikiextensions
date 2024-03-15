@@ -25,6 +25,7 @@ export interface IAnimeResult {
     type?: MediaFormat;
     releaseDate?: string;
     [x: string]: any;
+    language?: SubOrSub;
 }
 export interface ISearch<T> {
     currentPage?: number;
@@ -160,7 +161,8 @@ export declare enum StreamingServers {
     SmashyStream = "smashystream",
     StreamHub = "streamhub",
     StreamWish = "streamwish",
-    VidMoly = "vidmoly"
+    VidMoly = "vidmoly",
+    OkRu = "ok"
 }
 export declare enum MediaStatus {
     ONGOING = "Ongoing",
@@ -296,7 +298,7 @@ export interface ISource {
     };
     intro?: Intro;
     subtitles?: ISubtitle[];
-    sources: IVideo[];
+    sources?: IVideo[];
     download?: string;
     embedURL?: string;
 }
