@@ -16,7 +16,7 @@ test('returns a filled array of anime list', async () => {
   //console.log(episodes);
   //console.log(episodes.episodes);
   //console.log(episodes.episodes![1].id);
-  //const sources = await mono.fetchEpisodeSources(episodes.episodes![1].url!, StreamingServers.OkRu)
-  //console.log(sources.embedURL);
+  const sources = await mono.fetchEpisodeSources(episodes.episodes![1].url!, StreamingServers.OkRu)
+  console.log(sources);
   expect(data.results).not.toEqual([]);
 });

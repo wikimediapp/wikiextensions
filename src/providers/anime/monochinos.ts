@@ -15,6 +15,7 @@ import {
   SubOrSub,
   Language,
   ProxyConfig,
+  IVideo,
 } from '../../models';
 
 import { StreamSB, RapidCloud, StreamTape, Filemoon } from '../../utils';
@@ -120,7 +121,7 @@ class MonoChinos extends AnimeParser {
       info.totalEpisodes = info.episodes.length;
       const type = $('td.table1').filter((index, element) => $(element).text() === 'Tipo').next().text().trim();
 
-//console.log(tipo); // Debería imprimir "Pelicula"
+      //console.log(tipo); // Debería imprimir "Pelicula"
       info.type = type.toUpperCase() as MediaFormat
       //nfo.date = calendar.year;
       //anime.station = calendar.station;
@@ -149,13 +150,12 @@ class MonoChinos extends AnimeParser {
     episodeId: string,
     server: StreamingServers = StreamingServers.OkRu
   ): Promise<ISource> => {
-    let sources: ISource = {};
+    let isources: ISource = {};
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
-      let serverSource = (await getEpisodeServers(episodeId)).find(episode => episode.name === server);
-      console.log(serverSource?.url)
+      let serversSource = (await getEpisodeServers(episodeId))/*.find(episode => episode.name === server)*/;
       switch (server) {
-        case StreamingServers.OkRu:
+        /*case StreamingServers.OkRu:
           return sources = {
             embedURL: serverSource?.url
           };
@@ -172,12 +172,25 @@ class MonoChinos extends AnimeParser {
               Referer: serverUrl.href, 'User-Agent': USER_AGENT
             },
             sources: await new Mp4Upload(this.proxyConfig, this.adapter).extract(serverUrl)
-          };
+          };*/
         default:
-          return sources = {}; // Puedes devolver un objeto vacío o undefined según tu lógica
+          let sources: IVideo[] = [];
+          serversSource.forEach(server => {
+            sources.push({
+              url: server.url,
+              name: server.name,
+            });
+          });
+
+          return isources = {
+            headers: {
+              Referer: serverUrl.href
+            },
+            sources: sources
+          };
       }
     }
-    return sources; // Devuelve sources o undefined al final de la función
+    return isources; // Devuelve sources o undefined al final de la función
   };
 
   private retrieveServerId = ($: any, index: number, subOrDub: 'sub' | 'dub') => {

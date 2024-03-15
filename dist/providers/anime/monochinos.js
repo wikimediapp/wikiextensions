@@ -6,9 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const cheerio_1 = require("cheerio");
 const models_1 = require("../../models");
-const utils_1 = require("../../utils");
-const utils_2 = require("../../utils");
-const extractors_1 = require("../../extractors");
 class MonoChinos extends models_1.AnimeParser {
     constructor() {
         super(...arguments);
@@ -117,35 +114,46 @@ class MonoChinos extends models_1.AnimeParser {
          * @param episodeId Episode id
          */
         this.fetchEpisodeSources = async (episodeId, server = models_1.StreamingServers.OkRu) => {
-            let sources = {};
+            let isources = {};
             if (episodeId.startsWith('http')) {
                 const serverUrl = new URL(episodeId);
-                let serverSource = (await getEpisodeServers(episodeId)).find(episode => episode.name === server);
-                console.log(serverSource === null || serverSource === void 0 ? void 0 : serverSource.url);
+                let serversSource = (await getEpisodeServers(episodeId)) /*.find(episode => episode.name === server)*/;
                 switch (server) {
-                    case models_1.StreamingServers.OkRu:
-                        return sources = {
-                            embedURL: serverSource === null || serverSource === void 0 ? void 0 : serverSource.url
-                        };
-                    case models_1.StreamingServers.Filemoon:
-                        return sources = {
-                            headers: {
-                                Referer: serverUrl.href, 'User-Agent': utils_2.USER_AGENT
-                            },
-                            sources: await new utils_1.Filemoon(this.proxyConfig, this.adapter).extract(serverUrl)
-                        };
-                    case models_1.StreamingServers.Mp4Upload:
-                        return sources = {
-                            headers: {
-                                Referer: serverUrl.href, 'User-Agent': utils_2.USER_AGENT
-                            },
-                            sources: await new extractors_1.Mp4Upload(this.proxyConfig, this.adapter).extract(serverUrl)
-                        };
+                    /*case StreamingServers.OkRu:
+                      return sources = {
+                        embedURL: serverSource?.url
+                      };
+                    case StreamingServers.Filemoon:
+                      return sources = {
+                        headers: {
+                          Referer: serverUrl.href, 'User-Agent': USER_AGENT
+                        },
+                        sources: await new Filemoon(this.proxyConfig, this.adapter).extract(serverUrl)
+                      };
+                    case StreamingServers.Mp4Upload:
+                      return sources = {
+                        headers: {
+                          Referer: serverUrl.href, 'User-Agent': USER_AGENT
+                        },
+                        sources: await new Mp4Upload(this.proxyConfig, this.adapter).extract(serverUrl)
+                      };*/
                     default:
-                        return sources = {}; // Puedes devolver un objeto vacío o undefined según tu lógica
+                        let sources = [];
+                        serversSource.forEach(server => {
+                            sources.push({
+                                url: server.url,
+                                name: server.name,
+                            });
+                        });
+                        return isources = {
+                            headers: {
+                                Referer: serverUrl.href
+                            },
+                            sources: sources
+                        };
                 }
             }
-            return sources; // Devuelve sources o undefined al final de la función
+            return isources; // Devuelve sources o undefined al final de la función
         };
         this.retrieveServerId = ($, index, subOrDub) => {
             return $(`div.ps_-block.ps_-block-sub.servers-${subOrDub} > div.ps__-list > div`)
