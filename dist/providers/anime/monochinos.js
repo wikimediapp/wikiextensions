@@ -90,8 +90,22 @@ class MonoChinos extends models_1.AnimeParser {
                 //info.status = 'estreno' === $('div.butns button.btn1').text().toLowerCase().trim();
                 info.episodes = getAnimeEpisodes($);
                 info.totalEpisodes = info.episodes.length;
+                const type = $('td.table1').filter((index, element) => $(element).text() === 'Tipo').next().text().trim();
+                //console.log(tipo); // Debería imprimir "Pelicula"
+                info.type = type.toUpperCase();
                 //nfo.date = calendar.year;
                 //anime.station = calendar.station;
+                let language;
+                if (id === null || id === void 0 ? void 0 : id.includes("latino")) {
+                    language = models_1.Language.LATINO;
+                }
+                else if (id === null || id === void 0 ? void 0 : id.includes("castellano")) {
+                    language = models_1.Language.CASTELLANO;
+                }
+                else {
+                    language = models_1.Language.ORIGINAL;
+                }
+                info.language = language;
                 return info;
             }
             catch (err) {

@@ -118,8 +118,23 @@ class MonoChinos extends AnimeParser {
       //info.status = 'estreno' === $('div.butns button.btn1').text().toLowerCase().trim();
       info.episodes = getAnimeEpisodes($);
       info.totalEpisodes = info.episodes.length;
+      const type = $('td.table1').filter((index, element) => $(element).text() === 'Tipo').next().text().trim();
+
+//console.log(tipo); // Debería imprimir "Pelicula"
+      info.type = type.toUpperCase() as MediaFormat
       //nfo.date = calendar.year;
       //anime.station = calendar.station;
+      let language;
+      if (id?.includes("latino")) {
+        language = Language.LATINO;
+      }
+      else if (id?.includes("castellano")) {
+        language = Language.CASTELLANO;
+      }
+      else {
+        language = Language.ORIGINAL;
+      }
+      info.language = language;
       return info;
     } catch (err) {
       throw new Error((err as Error).message);
