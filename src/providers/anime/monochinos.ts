@@ -13,6 +13,7 @@ import {
   StreamingServers,
   MediaFormat,
   SubOrSub,
+  Language,
   ProxyConfig,
 } from '../../models';
 
@@ -62,13 +63,13 @@ class MonoChinos extends AnimeParser {
 
         let language;
         if (url?.includes("latino")) {
-          language = SubOrSub.DUB;
+          language = Language.LATINO;
         }
         else if (url?.includes("castellano")) {
-          language = SubOrSub.DUB;
+          language = Language.CASTELLANO;
         }
         else {
-          language = SubOrSub.SUB;
+          language = Language.ORIGINAL;
         }
         res.results.push({
           id: id!,
@@ -116,6 +117,7 @@ class MonoChinos extends AnimeParser {
       //info.image = new types.Image($('div.chapterpic img').attr('src'), $('div.herobg img').attr('src'));
       //info.status = 'estreno' === $('div.butns button.btn1').text().toLowerCase().trim();
       info.episodes = getAnimeEpisodes($);
+      info.totalEpisodes = info.episodes.length;
       //nfo.date = calendar.year;
       //anime.station = calendar.station;
       return info;

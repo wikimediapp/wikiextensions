@@ -28,7 +28,7 @@ export interface IAnimeResult {
   type?: MediaFormat;
   releaseDate?: string;
   [x: string]: any; // other fields
-  language?: SubOrSub;
+  language?: Language;
 }
 
 export interface ISearch<T> {
@@ -192,6 +192,12 @@ export enum SubOrSub {
   SUB = 'sub',
   DUB = 'dub',
   BOTH = 'both',
+}
+
+export enum Language {
+  CASTELLANO = 'castellano',
+  LATINO = 'latino',
+  ORIGINAL = 'original',
 }
 
 export interface IMangaResult {

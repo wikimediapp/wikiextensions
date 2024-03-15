@@ -25,7 +25,7 @@ export interface IAnimeResult {
     type?: MediaFormat;
     releaseDate?: string;
     [x: string]: any;
-    language?: SubOrSub;
+    language?: Language;
 }
 export interface ISearch<T> {
     currentPage?: number;
@@ -176,6 +176,11 @@ export declare enum SubOrSub {
     SUB = "sub",
     DUB = "dub",
     BOTH = "both"
+}
+export declare enum Language {
+    CASTELLANO = "castellano",
+    LATINO = "latino",
+    ORIGINAL = "original"
 }
 export interface IMangaResult {
     id: string;

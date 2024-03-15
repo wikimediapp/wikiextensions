@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MediaFormat = exports.Topics = exports.Genres = exports.MovieParser = exports.TvType = exports.GetComicsComicsObject = exports.ComicParser = exports.NewsParser = exports.MangaParser = exports.LightNovelParser = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.LibgenBookObject = exports.VideoExtractor = exports.BookParser = exports.AnimeParser = exports.BaseParser = exports.BaseProvider = void 0;
+exports.MediaFormat = exports.Topics = exports.Genres = exports.MovieParser = exports.TvType = exports.GetComicsComicsObject = exports.ComicParser = exports.NewsParser = exports.MangaParser = exports.LightNovelParser = exports.Language = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.LibgenBookObject = exports.VideoExtractor = exports.BookParser = exports.AnimeParser = exports.BaseParser = exports.BaseProvider = void 0;
 const base_provider_1 = __importDefault(require("./base-provider"));
 exports.BaseProvider = base_provider_1.default;
 const base_parser_1 = __importDefault(require("./base-parser"));
@@ -28,6 +28,7 @@ const types_1 = require("./types");
 Object.defineProperty(exports, "StreamingServers", { enumerable: true, get: function () { return types_1.StreamingServers; } });
 Object.defineProperty(exports, "MediaStatus", { enumerable: true, get: function () { return types_1.MediaStatus; } });
 Object.defineProperty(exports, "SubOrSub", { enumerable: true, get: function () { return types_1.SubOrSub; } });
+Object.defineProperty(exports, "Language", { enumerable: true, get: function () { return types_1.Language; } });
 Object.defineProperty(exports, "TvType", { enumerable: true, get: function () { return types_1.TvType; } });
 Object.defineProperty(exports, "Genres", { enumerable: true, get: function () { return types_1.Genres; } });
 Object.defineProperty(exports, "Topics", { enumerable: true, get: function () { return types_1.Topics; } });

@@ -43,13 +43,13 @@ class MonoChinos extends models_1.AnimeParser {
                     const type = info.split(" · ")[0];
                     let language;
                     if (url === null || url === void 0 ? void 0 : url.includes("latino")) {
-                        language = models_1.SubOrSub.DUB;
+                        language = models_1.Language.LATINO;
                     }
                     else if (url === null || url === void 0 ? void 0 : url.includes("castellano")) {
-                        language = models_1.SubOrSub.DUB;
+                        language = models_1.Language.CASTELLANO;
                     }
                     else {
-                        language = models_1.SubOrSub.SUB;
+                        language = models_1.Language.ORIGINAL;
                     }
                     res.results.push({
                         id: id,
@@ -89,6 +89,7 @@ class MonoChinos extends models_1.AnimeParser {
                 //info.image = new types.Image($('div.chapterpic img').attr('src'), $('div.herobg img').attr('src'));
                 //info.status = 'estreno' === $('div.butns button.btn1').text().toLowerCase().trim();
                 info.episodes = getAnimeEpisodes($);
+                info.totalEpisodes = info.episodes.length;
                 //nfo.date = calendar.year;
                 //anime.station = calendar.station;
                 return info;

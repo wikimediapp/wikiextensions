@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Topics = exports.Genres = exports.TvType = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.MediaFormat = void 0;
+exports.Topics = exports.Genres = exports.TvType = exports.Language = exports.SubOrSub = exports.MediaStatus = exports.StreamingServers = exports.MediaFormat = void 0;
 var MediaFormat;
 (function (MediaFormat) {
     MediaFormat["TV"] = "TV";
@@ -50,6 +50,12 @@ var SubOrSub;
     SubOrSub["DUB"] = "dub";
     SubOrSub["BOTH"] = "both";
 })(SubOrSub || (exports.SubOrSub = SubOrSub = {}));
+var Language;
+(function (Language) {
+    Language["CASTELLANO"] = "castellano";
+    Language["LATINO"] = "latino";
+    Language["ORIGINAL"] = "original";
+})(Language || (exports.Language = Language = {}));
 /**
  * Used **only** for movie/tvshow providers
  */
