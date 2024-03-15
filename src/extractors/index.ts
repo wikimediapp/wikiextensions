@@ -15,6 +15,7 @@ import StreamTape from './streamtape';
 import StreamWish from './streamwish';
 import VidCloud from './vidcloud';
 import VidMoly from './vidmoly';
+import MegaCloud from './megacloud';
 import VizCloud from './vizcloud';
 import Voe from './voe';
 import OkRu from './okru';
@@ -39,5 +40,6 @@ export {
   VidMoly,
   VizCloud,
   Voe,
-  OkRu
+  OkRu,
+  MegaCloud
 };

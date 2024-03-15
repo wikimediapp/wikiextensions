@@ -319,6 +319,13 @@ export interface ISubtitle {
   lang: string;
 }
 
+export interface ISubtitle2 {
+  file?: string;
+  kind?: string;
+  label?: string;
+  default?: boolean;
+}
+
 /**
  * The start, and the end of the intro or opening in seconds.
  */
@@ -330,7 +337,7 @@ export interface Intro {
 export interface ISource {
   headers?: { [k: string]: string };
   intro?: Intro;
-  subtitles?: ISubtitle[];
+  subtitles?: ISubtitle[] | ISubtitle2[];
   sources?: IVideo[];
   download?: string;
   embedURL?: string;

@@ -18,6 +18,7 @@ import {
 
 import { StreamSB, RapidCloud, StreamTape } from '../../utils';
 import { USER_AGENT } from '../../utils';
+import { MegaCloud } from '../../extractors';
 
 class Zoro extends AnimeParser {
   override readonly name = 'Zoro';
@@ -174,9 +175,9 @@ class Zoro extends AnimeParser {
       const serverUrl = new URL(episodeId);
       switch (server) {
         case StreamingServers.VidStreaming:
-        case StreamingServers.VidCloud:
+        //case StreamingServers.VidCloud:
           return {
-            ...(await new RapidCloud(this.proxyConfig, this.adapter).extract(serverUrl)),
+            ...(await new MegaCloud(this.proxyConfig, this.adapter).extract(serverUrl)),
           };
         case StreamingServers.StreamSB:
           return {

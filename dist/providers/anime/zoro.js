@@ -4,6 +4,7 @@ const cheerio_1 = require("cheerio");
 const models_1 = require("../../models");
 const utils_1 = require("../../utils");
 const utils_2 = require("../../utils");
+const extractors_1 = require("../../extractors");
 class Zoro extends models_1.AnimeParser {
     constructor() {
         super(...arguments);
@@ -136,8 +137,8 @@ class Zoro extends models_1.AnimeParser {
                 const serverUrl = new URL(episodeId);
                 switch (server) {
                     case models_1.StreamingServers.VidStreaming:
-                    case models_1.StreamingServers.VidCloud:
-                        return Object.assign({}, (await new utils_1.RapidCloud(this.proxyConfig, this.adapter).extract(serverUrl)));
+                        //case StreamingServers.VidCloud:
+                        return Object.assign({}, (await new extractors_1.MegaCloud(this.proxyConfig, this.adapter).extract(serverUrl)));
                     case models_1.StreamingServers.StreamSB:
                         return {
                             headers: { Referer: serverUrl.href, watchsb: 'streamsb', 'User-Agent': utils_2.USER_AGENT },

@@ -1,6 +1,6 @@
 {
   "name": "wikimediapi-extensions",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Nodejs library that provides high-level APIs for obtaining information on various entertainment media such as books, movies, comic books, anime, manga, and so on.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,6 +11,7 @@
     "test": "jest",
     "test:anime": "jest ./test/anime",
     "test:monochino": "jest ./test/anime/monochino.test.ts",
+    "test:zoro": "jest ./test/anime/zoro.test.ts",
     "test:books": "jest ./test/books/libgen.test.ts",
     "test:comics": "jest ./test/comics",
     "test:movies": "jest ./test/movies",

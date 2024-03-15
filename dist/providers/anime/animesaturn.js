@@ -116,6 +116,8 @@ class AnimeSaturn extends models_1.AnimeParser {
                 (_a = sources.subtitles) === null || _a === void 0 ? void 0 : _a.push({
                     url: getOneSource.replace('playlist.m3u8', 'subtitles.vtt'),
                     lang: 'Spanish',
+                    file: "",
+                    kind: ""
                 });
             }
             return sources;

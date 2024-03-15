@@ -152,6 +152,8 @@ class AnimeSaturn extends AnimeParser {
         sources.subtitles?.push({
           url: getOneSource.replace('playlist.m3u8', 'subtitles.vtt'),
           lang: 'Spanish',
+          file: "",
+          kind: ""
         });
     }
 

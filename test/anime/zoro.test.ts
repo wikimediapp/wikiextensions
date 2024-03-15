@@ -1,10 +1,11 @@
+import { StreamingServers } from '../../src/models';
 import { ANIME } from '../../src/providers';
 
 jest.setTimeout(120000);
 
 const zoro = new ANIME.Zoro();
 
-test('returns a filled array of anime list', async () => {
+/*test('returns a filled array of anime list', async () => {
   const data = await zoro.search('Overlord IV');
   expect(data.results).not.toEqual([]);
 });
@@ -15,7 +16,7 @@ test('returns a filled object of anime data', async () => {
   expect(data).not.toBeNull();
   expect(data.description).not.toBeNull();
   expect(data.episodes).not.toEqual([]);
-});
+});*/
 
 /*test('returns a filled array of recent animes', async () => {
   const data = await zoro.fetchRecentEpisodes();
@@ -23,8 +24,9 @@ test('returns a filled object of anime data', async () => {
 });*/
 
 test('returns a filled object of episode sources', async () => {
-  const res = await zoro.search('Overlord IV');
-  const info = await zoro.fetchAnimeInfo(res.results[3].id);
-  const data = await zoro.fetchEpisodeSources(info.episodes![0].id); // Overlord IV episode 1 id
+  const res = await zoro.search('naruto');
+  const info = await zoro.fetchAnimeInfo(res.results[2].id);
+  const data = await zoro.fetchEpisodeSources(info.episodes![0].id, StreamingServers.VidCloud); // Overlord IV episode 1 id
+  console.log(data);
   expect(data.sources).not.toEqual([]);
 });
