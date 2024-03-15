@@ -274,14 +274,14 @@ class Enime extends AnimeParser {
       const index = url.lastIndexOf('/');
       const quality = ress.split('\n')[0].split('x')[1].split(',')[0];
       const urll = url.slice(0, index);
-      res.sources.push({
+      res.sources!.push({
         url: urll + '/' + ress.split('\n')[1],
         isM3U8: (urll + ress.split('\n')[1]).includes('.m3u8'),
         quality: quality + 'p',
       });
     });
 
-    res.sources.push({
+    res.sources!.push({
       url: url,
       isM3U8: url.includes('.m3u8'),
       quality: 'default',
@@ -310,14 +310,14 @@ class Enime extends AnimeParser {
       const index = url.lastIndexOf('/');
       const quality = ress.split('\n')[0].split('x')[1].split(',')[0];
       const urll = url.slice(0, index);
-      res.sources.push({
+      res.sources!.push({
         url: urll + '/' + ress.split('\n')[1],
         isM3U8: (urll + ress.split('\n')[1]).includes('.m3u8'),
         quality: quality + 'p',
       });
     });
 
-    res.sources.push({
+    res.sources!.push({
       url: url,
       isM3U8: url.includes('.m3u8'),
       quality: 'default',

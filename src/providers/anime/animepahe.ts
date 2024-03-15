@@ -170,7 +170,7 @@ class AnimePahe extends AnimeParser {
         const res = await new Kwik(this.proxyConfig).extract(new URL(link.url));
         res[0].quality = link.quality;
         res[0].isDub = link.audio === 'eng';
-        iSource.sources.push(res[0]);
+        iSource.sources!.push(res[0]);
       }
 
       return iSource;

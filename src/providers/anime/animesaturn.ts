@@ -143,7 +143,7 @@ class AnimeSaturn extends AnimeParser {
 
     if (!getOneSource) throw new Error('Invalid source');
 
-    sources.sources.push({
+    sources.sources!.push({
       url: getOneSource,
       isM3U8: getOneSource.includes('.m3u8'),
     });

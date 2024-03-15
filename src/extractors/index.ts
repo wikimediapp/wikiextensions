@@ -17,6 +17,7 @@ import VidCloud from './vidcloud';
 import VidMoly from './vidmoly';
 import VizCloud from './vizcloud';
 import Voe from './voe';
+import OkRu from './okru';
 
 export {
   AsianLoad,
@@ -37,5 +38,6 @@ export {
   VidCloud,
   VidMoly,
   VizCloud,
-  Voe
+  Voe,
+  OkRu
 };
