@@ -334,9 +334,15 @@ export interface Intro {
   end: number;
 }
 
+export interface Outro {
+  start: number;
+  end: number;
+}
+
 export interface ISource {
   headers?: { [k: string]: string };
   intro?: Intro;
+  outro?: Outro;
   subtitles?: ISubtitle[] | ISubtitle2[];
   sources?: IVideo[];
   download?: string;

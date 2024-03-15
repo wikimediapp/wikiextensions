@@ -29,7 +29,7 @@ class RapidCloud extends models_1.VideoExtractor {
                 };
                 let res = null;
                 res = await this.client.get(`https://${videoUrl.hostname}/embed-2/ajax/e-1/getSources?id=${id}`, options);
-                let { data: { sources, tracks, intro, encrypted }, } = res;
+                let { data: { sources, tracks, intro, outro, encrypted }, } = res;
                 let decryptKey = await (await this.client.get('https://raw.githubusercontent.com/Phantom-KNA/GeneratorFlixHQ/e1/key')).data;
                 decryptKey = (0, utils_1.substringBefore)((0, utils_1.substringAfter)(decryptKey, '"blob-code blob-code-inner js-file-line">'), '</td>');
                 if (!decryptKey) {
@@ -65,34 +65,40 @@ class RapidCloud extends models_1.VideoExtractor {
                     isM3U8: s.file.includes('.m3u8'),
                 }));
                 result.sources.push(...this.sources);
-                if (videoUrl.href.includes(new URL(this.host).host)) {
-                    result.sources = [];
-                    this.sources = [];
-                    for (const source of sources) {
-                        const { data } = await this.client.get(source.file, options);
-                        const m3u8data = data
-                            .split('\n')
-                            .filter((line) => line.includes('.m3u8') && line.includes('RESOLUTION='));
-                        const secondHalf = m3u8data.map((line) => { var _a; return (_a = line.match(/RESOLUTION=.*,(C)|URI=.*/g)) === null || _a === void 0 ? void 0 : _a.map((s) => s.split('=')[1]); });
-                        const TdArray = secondHalf.map((s) => {
-                            const f1 = s[0].split(',C')[0];
-                            const f2 = s[1].replace(/"/g, '');
-                            return [f1, f2];
+                //if (videoUrl.href.includes(new URL(this.host).host)) { //Always megacloud
+                result.sources = [];
+                this.sources = [];
+                for (const source of sources) {
+                    const { data } = await this.client.get(source.file, options);
+                    const m3u8data = data
+                        .split('\n')
+                        .filter((line) => line.includes('.m3u8') && line.includes('RESOLUTION='));
+                    const secondHalf = m3u8data.map((line) => { var _a; return (_a = line.match(/RESOLUTION=.*,(C)|URI=.*/g)) === null || _a === void 0 ? void 0 : _a.map((s) => s.split('=')[1]); });
+                    const TdArray = secondHalf.map((s) => {
+                        const f1 = s[0].split(',C')[0];
+                        const f2 = s[1].replace(/"/g, '');
+                        return [f1, f2];
+                    });
+                    for (const [f1, f2] of TdArray) {
+                        this.sources.push({
+                            url: `${(_b = source.file) === null || _b === void 0 ? void 0 : _b.split('master.m3u8')[0]}${f2.replace('iframes', 'index')}`,
+                            quality: f1.split('x')[1] + 'p',
+                            isM3U8: f2.includes('.m3u8'),
                         });
-                        for (const [f1, f2] of TdArray) {
-                            this.sources.push({
-                                url: `${(_b = source.file) === null || _b === void 0 ? void 0 : _b.split('master.m3u8')[0]}${f2.replace('iframes', 'index')}`,
-                                quality: f1.split('x')[1] + 'p',
-                                isM3U8: f2.includes('.m3u8'),
-                            });
-                        }
-                        result.sources.push(...this.sources);
                     }
+                    result.sources.push(...this.sources);
                 }
+                //}
                 if ((intro === null || intro === void 0 ? void 0 : intro.end) > 1) {
                     result.intro = {
                         start: intro.start,
                         end: intro.end,
+                    };
+                }
+                if ((outro === null || outro === void 0 ? void 0 : outro.end) > 1) {
+                    result.outro = {
+                        start: outro.start,
+                        end: outro.end,
                     };
                 }
                 result.sources.push({

@@ -135,10 +135,11 @@ class Zoro extends models_1.AnimeParser {
             var _a;
             if (episodeId.startsWith('http')) {
                 const serverUrl = new URL(episodeId);
+                console.log(serverUrl);
                 switch (server) {
                     case models_1.StreamingServers.VidStreaming:
                         //case StreamingServers.VidCloud:
-                        return Object.assign({}, (await new extractors_1.MegaCloud(this.proxyConfig, this.adapter).extract(serverUrl)));
+                        return Object.assign({ headers: { Referer: serverUrl.href } }, (await new extractors_1.MegaCloud(this.proxyConfig, this.adapter).extract(serverUrl)));
                     case models_1.StreamingServers.StreamSB:
                         return {
                             headers: { Referer: serverUrl.href, watchsb: 'streamsb', 'User-Agent': utils_2.USER_AGENT },

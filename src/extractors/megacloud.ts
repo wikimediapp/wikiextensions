@@ -1,7 +1,7 @@
 import axios from "axios";
 import crypto from "crypto";
 import { substringAfter, substringBefore } from '../utils';
-import { VideoExtractor, IVideo, ISubtitle2, Intro, ProxyConfig } from '../models';
+import { VideoExtractor, IVideo, ISubtitle2, Intro, Outro, ProxyConfig } from '../models';
 
 // https://megacloud.tv/embed-2/e-1/dBqCr5BcOhnD?k=1
 
@@ -163,7 +163,7 @@ class MegaCloud extends VideoExtractor {
   private readonly host = 'https://megacloud.tv';
 
   override extract = async (videoUrl: URL): Promise<{ sources: IVideo[] } & { subtitles: ISubtitle2[] }> => {
-    const result: { sources: IVideo[]; subtitles: ISubtitle2[]; intro?: Intro } = {
+    const result: { sources: IVideo[]; subtitles: ISubtitle2[]; intro?: Intro; outro?: Outro } = {
       sources: [],
       subtitles: [],
     };
@@ -286,12 +286,19 @@ class MegaCloud extends VideoExtractor {
             end: extractedData.intro.end,
           };
         }
+
+        if (extractedData.outro?.end > 1) {
+          result.outro = {
+            start: extractedData.outro.start,
+            end: extractedData.outro.end,
+          };
+        }
   
-        /*result.sources.push({
+        result.sources.push({
           url: sources[0].file,
           isM3U8: sources[0].file.includes('.m3u8'),
           quality: 'auto',
-        });*/
+        });
 
         result.subtitles = extractedData.tracks?.map((s: any) => ({
           url: s.file,

@@ -112,7 +112,7 @@ class MegaCloud extends models_1.VideoExtractor {
         this.fallbackKey = 'c1d17096f2ca11b7';
         this.host = 'https://megacloud.tv';
         this.extract = async (videoUrl) => {
-            var _a, _b, _c, _d;
+            var _a, _b, _c, _d, _e;
             const result = {
                 sources: [],
                 subtitles: [],
@@ -212,12 +212,18 @@ class MegaCloud extends models_1.VideoExtractor {
                             end: extractedData.intro.end,
                         };
                     }
-                    /*result.sources.push({
-                      url: sources[0].file,
-                      isM3U8: sources[0].file.includes('.m3u8'),
-                      quality: 'auto',
-                    });*/
-                    result.subtitles = (_d = extractedData.tracks) === null || _d === void 0 ? void 0 : _d.map((s) => ({
+                    if (((_d = extractedData.outro) === null || _d === void 0 ? void 0 : _d.end) > 1) {
+                        result.outro = {
+                            start: extractedData.outro.start,
+                            end: extractedData.outro.end,
+                        };
+                    }
+                    result.sources.push({
+                        url: sources[0].file,
+                        isM3U8: sources[0].file.includes('.m3u8'),
+                        quality: 'auto',
+                    });
+                    result.subtitles = (_e = extractedData.tracks) === null || _e === void 0 ? void 0 : _e.map((s) => ({
                         url: s.file,
                         lang: s.label ? s.label : 'Thumbnails',
                         file: s.file,

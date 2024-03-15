@@ -24,9 +24,45 @@ test('returns a filled object of anime data', async () => {
 });*/
 
 test('returns a filled object of episode sources', async () => {
-  const res = await zoro.search('naruto');
-  const info = await zoro.fetchAnimeInfo(res.results[2].id);
-  const data = await zoro.fetchEpisodeSources(info.episodes![0].id, StreamingServers.VidCloud); // Overlord IV episode 1 id
-  console.log(data);
-  expect(data.sources).not.toEqual([]);
+  //const res = await zoro.search('naruto');
+  zoro.search('naruto').then((data) => {
+    const filteredResults = data.results.filter(
+      (result) => result.type === "TV"
+    );
+    const promises = filteredResults.map((result) => {
+      console.log(result.id)
+      return zoro.fetchAnimeInfo(result.id);
+    });
+    console.log("-------Buscando Todos los ID Consument--------");
+    Promise.all(promises)
+      .then((animeData) => {
+        const filteredData = animeData.filter(
+          (anime) => anime.malID === 20
+        );
+        zoro
+          .fetchAnimeInfo(filteredData[0].id)
+          .then((data) => {
+
+            const filteredEpisodes = data.episodes!.filter(
+              (episode) => episode.number == 1
+            );
+            const episodeNumbers = data.episodes!.map(
+              (episode) => episode
+            );
+            zoro.fetchEpisodeSources(filteredEpisodes[0].id, StreamingServers.VidCloud)
+              .then(async (datafinal) => {
+                console.log(JSON.stringify(datafinal));
+                expect(datafinal.sources).not.toEqual([]);
+                
+              });
+
+
+          });
+      });
+  });
+
+  //const info = await zoro.fetchAnimeInfo(res.results[2].id);
+  //const data = await zoro.fetchEpisodeSources(info.episodes![0].id, StreamingServers.VidCloud); // Overlord IV episode 1 id
+  //console.log(data);
+  //expect(data.sources).not.toEqual([]);
 });

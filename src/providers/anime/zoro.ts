@@ -173,10 +173,12 @@ class Zoro extends AnimeParser {
   ): Promise<ISource> => {
     if (episodeId.startsWith('http')) {
       const serverUrl = new URL(episodeId);
+      console.log(serverUrl);
       switch (server) {
         case StreamingServers.VidStreaming:
         //case StreamingServers.VidCloud:
           return {
+            headers: { Referer: serverUrl.href },
             ...(await new MegaCloud(this.proxyConfig, this.adapter).extract(serverUrl)),
           };
         case StreamingServers.StreamSB:

@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import CryptoJS from 'crypto-js';
 import { substringAfter, substringBefore } from '../utils';
-import { VideoExtractor, IVideo, ISubtitle, Intro, ProxyConfig } from '../models';
+import { VideoExtractor, IVideo, ISubtitle, Intro, Outro, ProxyConfig } from '../models';
 
 class RapidCloud extends VideoExtractor {
   protected override serverName = 'RapidCloud';
@@ -11,7 +11,7 @@ class RapidCloud extends VideoExtractor {
   private readonly host = 'https://rapid-cloud.co';
 
   override extract = async (videoUrl: URL): Promise<{ sources: IVideo[] } & { subtitles: ISubtitle[] }> => {
-    const result: { sources: IVideo[]; subtitles: ISubtitle[]; intro?: Intro } = {
+    const result: { sources: IVideo[]; subtitles: ISubtitle[]; intro?: Intro; outro?: Outro } = {
       sources: [],
       subtitles: [],
     };
@@ -31,7 +31,7 @@ class RapidCloud extends VideoExtractor {
       );
 
       let {
-        data: { sources, tracks, intro, encrypted },
+        data: { sources, tracks, intro, outro, encrypted },
       } = res;
 
       let decryptKey = await (
@@ -83,7 +83,7 @@ class RapidCloud extends VideoExtractor {
 
       result.sources.push(...this.sources);
 
-      if (videoUrl.href.includes(new URL(this.host).host)) {
+      //if (videoUrl.href.includes(new URL(this.host).host)) { //Always megacloud
         result.sources = [];
         this.sources = [];
         for (const source of sources) {
@@ -111,12 +111,20 @@ class RapidCloud extends VideoExtractor {
           }
           result.sources.push(...this.sources);
         }
-      }
+      //}
 
+      
       if (intro?.end > 1) {
         result.intro = {
           start: intro.start,
           end: intro.end,
+        };
+      }
+
+      if (outro?.end > 1) {
+        result.outro = {
+          start: outro.start,
+          end: outro.end,
         };
       }
 
