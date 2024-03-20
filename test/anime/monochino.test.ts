@@ -7,9 +7,12 @@ const mono = new ANIME.MonoChinos();
 
 test('returns a filled array of anime list', async () => {
   const data = await mono.search('boruto');
-  data.results.forEach(datas => {
+  const episodes = await mono.fetchAnimeInfo(data.results[1].id);
+  //console.log(episodes);
+  /*data.results.forEach(datas => {
+    
     console.log(datas);
-  });
+  });*/
   /*console.log(data.results[2].id);
   console.log(data.results[2].title);
   console.log(data.results[2].language);

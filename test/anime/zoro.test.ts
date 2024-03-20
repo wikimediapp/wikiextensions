@@ -25,7 +25,7 @@ test('returns a filled object of anime data', async () => {
 
 test('returns a filled object of episode sources', async () => {
   //const res = await zoro.search('naruto');
-  zoro.search('naruto').then((data) => {
+  zoro.search('Ore dake Level Up na Ken').then((data) => {
     const filteredResults = data.results.filter(
       (result) => result.type === "TV"
     );
@@ -37,7 +37,7 @@ test('returns a filled object of episode sources', async () => {
     Promise.all(promises)
       .then((animeData) => {
         const filteredData = animeData.filter(
-          (anime) => anime.malID === 20
+          (anime) => anime.malID === 52299
         );
         zoro
           .fetchAnimeInfo(filteredData[0].id)

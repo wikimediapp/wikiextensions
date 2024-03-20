@@ -68,12 +68,12 @@ class Zoro extends models_1.AnimeParser {
          * @param id Anime id
          */
         this.fetchAnimeInfo = async (id) => {
-            console.log(`${this.baseUrl}/watch/${id}`);
             const info = {
                 id: id,
                 title: '',
             };
             try {
+                console.log(`fetchAnimeInfo: ${this.baseUrl}/watch/${id}`);
                 const { data } = await this.client.get(`${this.baseUrl}/watch/${id}`);
                 const $ = (0, cheerio_1.load)(data);
                 const { mal_id, anilist_id } = JSON.parse($('#syncData').text());
@@ -125,7 +125,9 @@ class Zoro extends models_1.AnimeParser {
                 return info;
             }
             catch (err) {
-                throw new Error(err.message);
+                console.log(err);
+                return info;
+                //throw new Error((err as Error).message);
             }
         };
         /**

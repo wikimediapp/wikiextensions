@@ -63,7 +63,7 @@ class Zoro extends AnimeParser {
       if (res.totalPages === 0 && !res.hasNextPage) res.totalPages = 1;
 
       $('.film_list-wrap > div.flw-item').each((i, el) => {
-        const id = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('href')!.replace("?ref=search","").replace("/","");
+        const id = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('href')!.replace("?ref=search", "").replace("/", "");
         const title = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('title')!;
         // Movie, TV, OVA, ONA, Special, Music
         const type = $(el).find('div:nth-child(2) > div:nth-child(2) > span:nth-child(1)').text();
@@ -94,12 +94,12 @@ class Zoro extends AnimeParser {
    * @param id Anime id
    */
   override fetchAnimeInfo = async (id: string): Promise<IAnimeInfo> => {
-    console.log(`${this.baseUrl}/watch/${id}`);
     const info: IAnimeInfo = {
       id: id,
       title: '',
     };
     try {
+      console.log(`fetchAnimeInfo: ${this.baseUrl}/watch/${id}`);
       const { data } = await this.client.get(`${this.baseUrl}/watch/${id}`);
       const $ = load(data);
 
@@ -160,7 +160,9 @@ class Zoro extends AnimeParser {
 
       return info;
     } catch (err) {
-      throw new Error((err as Error).message);
+      console.log(err);
+      return info;
+      //throw new Error((err as Error).message);
     }
   };
 
@@ -177,7 +179,7 @@ class Zoro extends AnimeParser {
       console.log(serverUrl);
       switch (server) {
         case StreamingServers.VidStreaming:
-        //case StreamingServers.VidCloud:
+          //case StreamingServers.VidCloud:
           return {
             headers: { Referer: serverUrl.href },
             ...(await new MegaCloud(this.proxyConfig, this.adapter).extract(serverUrl)),
