@@ -94,6 +94,7 @@ class Zoro extends AnimeParser {
    * @param id Anime id
    */
   override fetchAnimeInfo = async (id: string): Promise<IAnimeInfo> => {
+    console.log(`${this.baseUrl}/watch/${id}`);
     const info: IAnimeInfo = {
       id: id,
       title: '',

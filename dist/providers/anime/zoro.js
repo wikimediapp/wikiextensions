@@ -68,6 +68,7 @@ class Zoro extends models_1.AnimeParser {
          * @param id Anime id
          */
         this.fetchAnimeInfo = async (id) => {
+            console.log(`${this.baseUrl}/watch/${id}`);
             const info = {
                 id: id,
                 title: '',
