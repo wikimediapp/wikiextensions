@@ -40,7 +40,7 @@ class Zoro extends models_1.AnimeParser {
                 if (res.totalPages === 0 && !res.hasNextPage)
                     res.totalPages = 1;
                 $('.film_list-wrap > div.flw-item').each((i, el) => {
-                    const id = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('href').replace("?ref=search", "");
+                    const id = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('href').replace("?ref=search", "").replace("/", "");
                     const title = $(el).find('div.film-detail > h3.film-name > a.dynamic-name').attr('title');
                     // Movie, TV, OVA, ONA, Special, Music
                     const type = $(el).find('div:nth-child(2) > div:nth-child(2) > span:nth-child(1)').text();
